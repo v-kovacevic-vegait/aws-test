@@ -77,8 +77,8 @@ pipeline{
 @NonCPS
 def runDataUpdate() {
 
+	sh "pwd"
 	sh '''
-	pwd
 	#!/bin/bash
 	export PATH="$PATH:$HOME/.dotnet/tools/"
 	dotnet ef database update --connection "User ID =test;Password=test;Host=172.0.0.1;Port=5432;Database=mealforfamilydb";
@@ -97,7 +97,6 @@ def runDataUpdate() {
                 echo "  ${file.editType.name} ${file.path}"
                 if(file.path.contains("Migrations")){
                     sh '''
-					pwd
                     #!/bin/bash
                     export PATH="$PATH:$HOME/.dotnet/tools/"
                     dotnet ef database update --connection "User ID =test;Password=test;Host=172.0.0.1;Port=5432;Database=mealforfamilydb";
