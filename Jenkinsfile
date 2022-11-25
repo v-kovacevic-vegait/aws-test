@@ -6,7 +6,6 @@ pipeline{
                 script {
                     def containerExists = sh script: "docker inspect -f '{{.State.Running}}' mealforfamily-test-mealforfamily-1", returnStatus: true
                     if( containerExists == 0){      
-                        sh 'chmod 666 /var/run/docker.sock'
                         sh 'docker stop mealforfamily-test-mealforfamily-1'
                         echo 'Old container stopped'
                     }else{
