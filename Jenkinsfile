@@ -6,7 +6,7 @@ pipeline{
                 script {
                     def containerExists = sh script: "docker inspect -f '{{.State.Running}}' mealforfamily-test-mealforfamily-1", returnStatus: true
                     if( containerExists == 0){      
-                        sh 'docker stop mealforfamily-test-mealforfamily-1'
+                        echo 'docker stop mealforfamily-test-mealforfamily-1'
                         echo 'Old container stopped'
                     }else{
                         echo 'mealforfamily-test-mealforfamily-1 NOT FOUND'
@@ -17,11 +17,10 @@ pipeline{
         stage('Build new container'){
             steps{
                 script {
-                    dir("mealforfamily-test/"){
-                        sh "ls -a"
-                        sh 'docker-compose up --build -d mealforfamily'
-                        echo 'New container built'
-                    }
+					sh "pwd"
+					sh "ls -a"
+					echo 'docker-compose up --build -d mealforfamily'
+					echo 'New container built'
                 }
             }
         }
@@ -40,7 +39,7 @@ pipeline{
                     if( containerExists == 0){
                         echo 'mealforfamily-test-mealforfamily-1-new FOUND'
                         if( oldContainerExists == 0){
-                            sh 'docker rm mealforfamily-test-mealforfamily-1'
+                            echo 'docker rm mealforfamily-test-mealforfamily-1'
                             echo 'Old container deleted'
                         }else{
                             echo 'mealforfamily-test-mealforfamily-1 NOT FOUND'
@@ -56,7 +55,7 @@ pipeline{
                 script {
                     def containerExists = sh script: "docker inspect -f '{{.State.Running}}' mealforfamily-test-mealforfamily-1-new", returnStatus: true
                     if( containerExists == 0){
-                        sh 'docker rename mealforfamily-test-mealforfamily-1-new mealforfamily-test-mealforfamily-1'
+                        echo 'docker rename mealforfamily-test-mealforfamily-1-new mealforfamily-test-mealforfamily-1'
                         echo 'New container renamed to mealforfamily-test-mealforfamily-1'
                     }else{
                         echo 'mealforfamily-test-mealforfamily-1-new NOT FOUND'
@@ -67,7 +66,7 @@ pipeline{
         stage('Docker system prune'){
             steps{
                 script {
-                    sh "docker system prune -f"
+                    echo "docker system prune -f"
                     echo 'Docker system prune'
                 }
             }
@@ -88,12 +87,12 @@ def runDataUpdate() {
             for (int k = 0; k < files.size(); k++) {
                 def file = files[k]
                 echo "  ${file.editType.name} ${file.path}"
-                if(file.path.contains("mealforfamily-test/Migrations")){
+                if(file.path.contains("Migrations")){
                     sh '''
+					pwd
                     #!/bin/bash
-                    cd mealforfamily-test
                     export PATH="$PATH:$HOME/.dotnet/tools/"
-                    dotnet ef database update --connection "User ID =test;Password=test;Host=172.31.22.191;Port=5432;Database=mealforfamilydb";
+                    dotnet ef database update --connection "User ID =test;Password=test;Host=172.0.0.1;Port=5432;Database=mealforfamilydb";
                     '''
                     echo "Database updated"
                 }
