@@ -78,8 +78,11 @@ pipeline{
 def runDataUpdate() {
 
 	sh "pwd"
-	sh 'export PATH="$PATH:$HOME/.dotnet/tools/"'
-	sh 'dotnet ef database update --connection "User ID =x;Password=x;Host=172.0.0.1;Port=5432;Database=mealforfamilydb";'
+	sh '''
+	#!/bin/bash
+	export PATH="$PATH:$HOME/.dotnet/tools/"
+	dotnet ef database update --connection "User ID =x;Password=x;Host=172.0.0.1;Port=5432;Database=mealforfamilydb";
+	'''
 	echo "Database updated"
 
     def changeLogSets = currentBuild.changeSets
@@ -96,7 +99,7 @@ def runDataUpdate() {
                     sh '''
                     #!/bin/bash
                     export PATH="$PATH:$HOME/.dotnet/tools/"
-                    dotnet ef database update --connection "User ID =test;Password=test;Host=172.0.0.1;Port=5432;Database=mealforfamilydb";
+                    dotnet ef database update --connection "User ID =x;Password=x;Host=172.0.0.1;Port=5432;Database=mealforfamilydb";
                     '''
                     echo "Database updated"
                 }
