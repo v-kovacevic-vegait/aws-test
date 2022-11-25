@@ -28,7 +28,7 @@ namespace MealForFamily.Controllers
         [HttpPost("test")]
         public async Task<IActionResult> Test(AuthenticateRequest request)
         {
-            String response = "test1";
+            String response = "test2";
             return Ok(response);
         }
     }
