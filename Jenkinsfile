@@ -78,13 +78,6 @@ pipeline{
 def runDataUpdate() {
 
 	sh "pwd"
-	sh '''
-	#!/bin/bash
-	export PATH="$PATH:$HOME/.dotnet/tools/"
-	dotnet ef database update --connection "User ID =x;Password=x;Host=172.0.0.1;Port=5432;Database=mealforfamilydb";
-	'''
-	echo "Database updated"
-
     def changeLogSets = currentBuild.changeSets
     for (int i = 0; i < changeLogSets.size(); i++) {
         def entries = changeLogSets[i].items
