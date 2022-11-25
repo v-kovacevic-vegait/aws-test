@@ -4,7 +4,6 @@ pipeline{
         stage('Stop old container'){
             steps{
                 script {
-					sh "sudo chmod 777 /var/run/docker.sock"
                     def containerExists = sh script: "docker inspect -f '{{.State.Running}}' mealforfamily-test-mealforfamily-1", returnStatus: true
                     if( containerExists == 0){      
                         echo 'docker stop mealforfamily-test-mealforfamily-1'
