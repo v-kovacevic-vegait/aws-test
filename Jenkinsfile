@@ -75,7 +75,7 @@ pipeline{
 }
 
 @NonCPS
-def runDataUpdates() {
+def runDataUpdate() {
 
 	sh "pwd"
 	sh 'export PATH="$PATH:$HOME/.dotnet/tools/"'
