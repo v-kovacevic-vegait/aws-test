@@ -77,15 +77,13 @@ pipeline{
 @NonCPS
 def runDataUpdate() {
 
-	if(file.path.contains("Migrations")){
-		sh '''
-		pwd
-		#!/bin/bash
-		export PATH="$PATH:$HOME/.dotnet/tools/"
-		dotnet ef database update --connection "User ID =test;Password=test;Host=172.0.0.1;Port=5432;Database=mealforfamilydb";
-		'''
-		echo "Database updated"
-	}
+	sh '''
+	pwd
+	#!/bin/bash
+	export PATH="$PATH:$HOME/.dotnet/tools/"
+	dotnet ef database update --connection "User ID =test;Password=test;Host=172.0.0.1;Port=5432;Database=mealforfamilydb";
+	'''
+	echo "Database updated"
 
     def changeLogSets = currentBuild.changeSets
     for (int i = 0; i < changeLogSets.size(); i++) {
