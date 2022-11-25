@@ -23,5 +23,13 @@ namespace MealForFamily.Controllers
             AuthenticateResponse response = await _userService.Authenticate(request);
             return Ok(response);
         }
+
+        [AllowAnonymous]
+        [HttpPost("test")]
+        public async Task<IActionResult> Test(AuthenticateRequest request)
+        {
+            String response = "test";
+            return Ok(response);
+        }
     }
 }
